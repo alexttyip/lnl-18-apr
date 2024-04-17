@@ -1,11 +1,18 @@
 export {};
 
+type UserResponse = {
+  name: string;
+  favouriteNumbers: number[];
+};
+
 const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
 
-// `json` is implicitly `any`
-const json = await response.json();
+// We're saying to TS "Trust me, `json` is of shape `UserResponse`"
+const json = (await response.json()) as UserResponse;
 
-// that means TS cannot verify the shape of the object
+// TS will now provide type-checking and intellisense based on the specified type
 const name = json.name;
+const favouriteNumbers = json.favouriteNumbers;
 
 console.log(name);
+console.log(favouriteNumbers[0]);
